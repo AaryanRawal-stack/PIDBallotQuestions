@@ -4,7 +4,7 @@ output:
   html_document: default
 ---
 
-```{r}
+```{r include = FALSE}
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
@@ -17,38 +17,38 @@ library(tidyr)
 
 ##IMPORTING DATA
 The following imports all the campaign finance data from the ballot question. 
-```{r} 
-setwd('~/Desktop/PID')
+```{r include = FALSE} 
+setwd('~/Desktop/PID/Campaign_Finance_Data')
 
 #Q1 Oppose
-OpposeTaxHike <- read_xlsx("~/Desktop/PID/BallotQuestions2022/Question1/Coalition_to_Stop_the_Tax_Hike_Amendment.xlsx")
+OpposeTaxHike <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2022Data/Question1/Coalition_to_Stop_the_Tax_Hike_Amendment.xlsx")
 
 #Q1 Support
-CoalitionforSocialJusticeFairShare <- read_xlsx("~/Desktop/PID/BallotQuestions2022/Question1/CoalitionforSocialJusticeFairShare.xlsx")
+CoalitionforSocialJusticeFairShare <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2022Data/Question1/CoalitionforSocialJusticeFairShare.xlsx")
 
-Fair_Share_Massachusetts <- read_xlsx("~/Desktop/PID/BallotQuestions2022/Question1/Fair_Share_Massachusetts.xlsx") 
+Fair_Share_Massachusetts <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2022Data/Question1/Fair_Share_Massachusetts.xlsx") 
 
 #Q2 Oppose
-`Committee For Competitive Dental Plans for Consumers` <- read_xlsx("~/Desktop/PID/BallotQuestions2022/Question2/Committee For Competitive Dental Plans for Consumers.xlsx")
-`Committee to Protect Access to Quality Dental Care` <- read_xlsx("~/Desktop/PID/BallotQuestions2022/Question2/Committee_to_Protect_Access_to_Quality_Dental_Care.xlsx")
+`Committee For Competitive Dental Plans for Consumers` <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2022Data/Question2/Committee For Competitive Dental Plans for Consumers.xlsx")
+`Committee to Protect Access to Quality Dental Care` <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2022Data/Question2/Committee_to_Protect_Access_to_Quality_Dental_Care.xlsx")
 
 #Q2 Support
-`Massachusetts Dental Care Providers for Better Dental Benefits` <- read_xlsx("~/Desktop/PID/BallotQuestions2022/Question2/Massachusetts Dental Care Providers for Better Dental Benefits.xlsx")
-`Committee on Dental Insurance Quality` <- read_xlsx("~/Desktop/PID/BallotQuestions2022/Question2/Committee on Dental Insurance Quality.xlsx")
+`Massachusetts Dental Care Providers for Better Dental Benefits` <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2022Data/Question2/Massachusetts Dental Care Providers for Better Dental Benefits.xlsx")
+`Committee on Dental Insurance Quality` <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2022Data/Question2/Committee on Dental Insurance Quality.xlsx")
 
 #Q3 
-`21st_Century_Alcohol_Retail_Reform_Committee` <- read_xlsx("~/Desktop/PID/BallotQuestions2022/Question3/21st_Century_Alcohol_Retail_Reform_Committee.xlsx")
+`21st_Century_Alcohol_Retail_Reform_Committee` <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2022Data/Question3/21st_Century_Alcohol_Retail_Reform_Committee.xlsx")
 
 #Q4
-`Fair_And_Secure_Massachusetts` <- read_xlsx("~/Desktop/PID/BallotQuestions2022/Question4/Fair_And_Secure_Massachusetts.xlsx")
+`Fair_And_Secure_Massachusetts` <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2022Data/Question4/Fair_And_Secure_Massachusetts.xlsx")
 
-`Vote_YES_for_Work_and_Family_Mobility` <- read_xlsx("~/Desktop/PID/BallotQuestions2022/Question4/Vote_YES_for_Work_and_Family_Mobility.xlsx")
+`Vote_YES_for_Work_and_Family_Mobility` <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2022Data/Question4/Vote_YES_for_Work_and_Family_Mobility.xlsx")
 ```
 
 ##CREATING LIST
 Lists combine multiple data frames into one vector, which we can then repeatedly add a function to. We also add a function to remove Aggregated Unitemized Receipts from the data (this is a sum of all contributions that isn't actually relavent to this data visualization). Finally, we name all the elements of the list. 
 
-```{r} 
+```{r include = FALSE} 
 Q2022 <- list(OpposeTaxHike, CoalitionforSocialJusticeFairShare, Fair_Share_Massachusetts, `Massachusetts Dental Care Providers for Better Dental Benefits`, `Committee For Competitive Dental Plans for Consumers`, `Committee on Dental Insurance Quality`, `Committee to Protect Access to Quality Dental Care`, `21st_Century_Alcohol_Retail_Reform_Committee`, `Fair_And_Secure_Massachusetts`, `Vote_YES_for_Work_and_Family_Mobility`)
 
 
@@ -86,7 +86,7 @@ Q2022 <- list(
 ##CLASSIFICATION FUNCTION
 The following function classifies all donations into one of six categories (corporate, association/union, individual contribution more than 100k, individual contribution less than 100k, and refunds). Refunds will be excluded from the data analysis. The column this function creates is called `Category_PID`. 
 
-```{r}
+```{r include = FALSE}
 classification <- function(x) { 
   print("Applying classification function...")
   x <- x %>%       
@@ -114,7 +114,7 @@ The following function outputs a table which states:
 3. The proportion of the amount of all contributions for each variable of `Category_PID`. This is labelled 
 `Proportion_Of_All_Amount_Donated`.
 
-```{r}
+```{r include = FALSE}
 create_summary_table <- function(df_name, df) {
   print(paste("Creating table for:", df_name))  # Debugging statement
   summary_df <- df %>%
@@ -152,7 +152,7 @@ create_summary_table <- function(df_name, df) {
 #_ Output _ 
 The following code produces the summary tables.
 
-```{r}
+```{r echo = FALSE}
 classified_tables_Q2022 <- lapply(Q2022, classification)
 
 for (df_name in names(classified_tables_Q2022)) {
