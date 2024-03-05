@@ -4,7 +4,7 @@ output:
   html_document: default
 ---
 
-```{r}
+```{r, include = FALSE}
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
@@ -17,7 +17,7 @@ library(tidyr)
 
 ##IMPORTING DATA
 The following imports all the campaign finance data from the ballot question. 
-```{r} 
+```{r, include = FALSE} 
 setwd('~/Desktop/PID/Campaign_Finance_Data')
 ```
 
