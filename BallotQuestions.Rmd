@@ -27,7 +27,6 @@ CoalitionforSocialJusticeFairShare <- read_xlsx("~/Desktop/PID/Campaign_Finance_
 
 Fair_Share_Massachusetts <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2022Data/Question1/Fair_Share_Massachusetts.xlsx") 
 
-
 `Committee For Competitive Dental Plans for Consumers` <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2022Data/Question2/Committee For Competitive Dental Plans for Consumers.xlsx")
 `Committee to Protect Access to Quality Dental Care` <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2022Data/Question2/Committee_to_Protect_Access_to_Quality_Dental_Care.xlsx")
 
@@ -55,6 +54,12 @@ Coalition_to_Protect_Patient_Safety <- read_xlsx("~/Desktop/PID/Campaign_Finance
 Committee_to_Ensure_Safe_Patient_Care <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2018Data/Question1/Committee_to_Ensure_Safe_Patient_Care.xlsx")
 
 People_Govern_Not_Money <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2018Data/Question2/People_Govern_Not_Money.xlsx")
+
+Freedom_for_All_Massachusetts_Inc <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2018Data/Question3/Freedom_for_All_Massachusetts_Inc.xlsx")
+
+Keep_Massachusetts_Safe <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2018Data/Question3/Keep_Massachusetts_Safe.xlsx")
+
+No_to_3 <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2018Data/Question3/No_to_3.xlsx")
 ```
 
 ##CREATING LIST
