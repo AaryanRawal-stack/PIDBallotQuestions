@@ -1,0 +1,114 @@
+----
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r}
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(readxl)
+library(gt)
+library(tidyr)
+```
+
+# _ DATA IMPORTATION _
+
+##IMPORTING DATA
+The following imports all the campaign finance data from the ballot question. 
+```{r} 
+setwd('~/Desktop/PID/Campaign_Finance_Data')
+```
+
+##CREATING LIST
+Create list. 
+Use list to exclude refunds. 
+
+```{r} 
+Q2022 <- lapply(Q2022, function(df) {
+  df %>% filter(Contributor != "Aggregated Unitemized Receipts")
+})
+
+```
+
+# _ FUNCTIONS _ 
+
+##CLASSIFICATION FUNCTION
+The following function classifies all donations into one of six categories (corporate, association/union, individual contribution more than 100k, individual contribution less than 100k, and refunds). Refunds will be excluded from the data analysis. The column this function creates is called `Category_PID`. 
+
+```{r}
+classification <- function(x) { 
+  print("Applying classification function...")
+  x <- x %>%       
+    mutate(Category_PID = case_when(
+      `Record Type Description` == "Corporate Inkind Contribution" ~ "Corporate", 
+      `Record Type Description` == "Business Contribution" ~ "Corporate", 
+      `Record Type Description` == "Union/Association" ~ "Union/Association",
+      `Record Type Description` == "Individual" & Amount >= 100000 ~ "Individual More Than 100K", 
+      `Record Type Description` == "Individual" & Amount < 100000 ~ "Individual Less Than 100K",
+      `Record Type Description` == "Committee" ~ "PAC", 
+      `Record Type Description` == "Non-Contribution" ~ "Refund"))
+  print("Classification done.")
+  print("Checking column names:")
+  print(colnames(x))
+  print("Checking first few rows of data:")
+  print(head(x))
+  return(x)
+}
+```
+
+##SUMMARY TABLE FUNCTION
+The following function outputs a table which states:
+1. The number of contributions for each variable of `Category_PID`
+2. The proportion of the number of all contributions for each variable of `Category_PID`. This is labelled `Proportion_Of_Contributions`.
+3. The proportion of the amount of all contributions for each variable of `Category_PID`. This is labelled 
+`Proportion_Of_All_Amount_Donated`.
+
+```{r}
+create_summary_table <- function(df_name, df) {
+  print(paste("Creating table for:", df_name))  # Debugging statement
+  summary_df <- df %>%
+    filter(Category_PID != "Refund") %>%
+    group_by(Category_PID) %>%
+    summarize(
+      Number_Of_Contributions = n(),
+      Total_Amount_Donated = sum(Amount)
+    ) %>%
+    mutate(
+      Proportion_Of_All_Contributions = Number_Of_Contributions / sum(Number_Of_Contributions),
+      Proportion_Of_All_Amount_Donated = Total_Amount_Donated / sum(Total_Amount_Donated)
+    ) |> complete(Category_PID = c("Corporate", "Individual Less Than 100K", "Individual More Than 100K", "Union/Association", "PAC"), fill = list(Number_Of_Contributions = 0, Total_Amount_Donated = 0, Proportion_Of_All_Contributions = 0, Proportion_Of_All_Amount_Donated = 0))
+
+  gt(summary_df, rowname_col = "Category_PID") %>%
+    tab_header(title = df_name) %>%
+    cols_label(
+      Number_Of_Contributions = "Number of Contributions", 
+      Total_Amount_Donated = "Total Amount Donated", 
+      Proportion_Of_All_Contributions = "Percentage of Contributions", 
+      Proportion_Of_All_Amount_Donated = "Percentage of Total Amount Donated"
+    ) %>%
+    fmt_currency(columns = c("Total_Amount_Donated"), use_seps = TRUE) %>%
+    fmt_percent(columns = c("Proportion_Of_All_Contributions", "Proportion_Of_All_Amount_Donated"), decimals = 2) %>%
+    cols_move(Proportion_Of_All_Contributions, Number_Of_Contributions) %>%
+    tab_style(
+      style = cell_text(
+        font = c(google_font(name = "Roboto"), default_fonts())
+      ),
+      locations = cells_body()
+    )
+}
+``` 
+
+#_ Output _ 
+The following code produces the summary tables.
+
+```{r}
+classified_tables_Q2022 <- lapply(Q2022, classification)
+
+for (df_name in names(classified_tables_Q2022)) {
+  cat("Table Name:", df_name, "\n")
+  print(create_summary_table(df_name, classified_tables_Q2022[[df_name]]))
+}
+
+```
