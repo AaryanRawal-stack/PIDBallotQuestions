@@ -37,8 +37,9 @@ Fair_Share_Massachusetts <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/Ballo
 
 `Fair_And_Secure_Massachusetts` <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2022Data/Question4/Fair_And_Secure_Massachusetts.xlsx")
 
-#Q2020
 `Vote_YES_for_Work_and_Family_Mobility` <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2022Data/Question4/Vote_YES_for_Work_and_Family_Mobility.xlsx")
+
+#Q2020 
 
 `Coalition_for_Safe_and_Secure_Data` <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2020Data/Question1/Coalition_for_Safe_and_Secure_Data.xlsx")
 
@@ -63,16 +64,31 @@ No_to_3 <- read_xlsx("~/Desktop/PID/Campaign_Finance_Data/BallotQuestions2018Dat
 ```
 
 ##CREATING LIST
-Lists combine multiple data frames into one vector, which we can then repeatedly add a function to. We also add a function to remove Aggregated Unitemized Receipts from the data (this is a sum of all contributions that isn't actually relavent to this data visualization). Finally, we name all the elements of the list. 
-
 ```{r include = FALSE} 
-Q2022 <- list(OpposeTaxHike, CoalitionforSocialJusticeFairShare, Fair_Share_Massachusetts, `Massachusetts Dental Care Providers for Better Dental Benefits`, `Committee For Competitive Dental Plans for Consumers`, `Committee on Dental Insurance Quality`, `Committee to Protect Access to Quality Dental Care`, `21st_Century_Alcohol_Retail_Reform_Committee`, `Fair_And_Secure_Massachusetts`, `Vote_YES_for_Work_and_Family_Mobility`)
+Q2022 <- list(OpposeTaxHike, CoalitionforSocialJusticeFairShare, Fair_Share_Massachusetts, `Massachusetts Dental Care Providers for Better Dental Benefits`, `Committee For Competitive Dental Plans for Consumers`, `Committee on Dental Insurance Quality`, `Committee to Protect Access to Quality Dental Care`, `21st_Century_Alcohol_Retail_Reform_Committee`, `Fair_And_Secure_Massachusetts`, Vote_YES_for_Work_and_Family_Mobility)
 
+Q2020 <- list(Coalition_for_Safe_and_Secure_Data, Massachusetts_Right_to_Repair_Committee, No_Ranked_Choice_Voting_Committee_2020, Ranked_Choice_Voting_2020_Committee)
 
+Q2018 <- list(Coalition_to_Protect_Patient_Safety, Committee_to_Ensure_Safe_Patient_Care, People_Govern_Not_Money, Freedom_for_All_Massachusetts_Inc, Keep_Massachusetts_Safe, No_to_3)
+```
+
+##DATA WRANGLING
+```{r }
 Q2022 <- lapply(Q2022, function(df) {
   df %>% filter(Contributor != "Aggregated Unitemized Receipts")
 })
 
+Q2020 <- lapply(Q2020, function(df) {
+  df %>% filter(Contributor != "Aggregated Unitemized Receipts")
+})
+
+Q2018 <- lapply(Q2018, function(df) {
+  df %>% filter(Contributor != "Aggregated Unitemized Receipts")
+})
+```
+
+#Names of Q2022
+```{r}
 Q2022 <- list(
 "Coalition to Stop the Tax Hike Amendment (Q1 2022, Oppose)" = OpposeTaxHike, 
 
@@ -93,10 +109,12 @@ Q2022 <- list(
 "Fair And Secure Massachusetts (Q4 2022, Oppose)" = `Fair_And_Secure_Massachusetts`,
 
 "Vote YES for Work and Family Mobility (Q4 2022, Support)" = `Vote_YES_for_Work_and_Family_Mobility`
-
 )
-
 ```
+
+#Names of Q2020
+
+#Name of Q2018
 
 # _ FUNCTIONS _ 
 
