@@ -246,7 +246,7 @@ The following code exports summary tables as PNGs.
 ```{r}
 export_summary_table_png <- function(summary_table, file_name) {
   #Place File
-  output_dir <- "~/Desktop/PID/BallotQuestions2022"
+  output_dir <- "~/Desktop/PID/Campaign_Finance_Data"
   # Generate the file name with the .png extension
   png_file <- paste0(output_dir, file_name, ".png")
   # Save the summary table as a PNG file
@@ -257,6 +257,19 @@ export_summary_table_png <- function(summary_table, file_name) {
 for (df_name in names(classified_tables_Q2022)) {
   cat("Table Name:", df_name, "\n")
   summary_table <- create_summary_table(df_name, classified_tables_Q2022[[df_name]])
+  export_summary_table_png(summary_table, file_name = df_name)
+  
+}
+
+for (df_name in names(classified_tables_Q2020)) {
+  cat("Table Name:", df_name, "\n")
+  summary_table <- create_summary_table(df_name, classified_tables_Q2020[[df_name]])
+  export_summary_table_png(summary_table, file_name = df_name)
+}
+
+for (df_name in names(classified_tables_Q2018)) {
+  cat("Table Name:", df_name, "\n")
+  summary_table <- create_summary_table(df_name, classified_tables_Q2018[[df_name]])
   export_summary_table_png(summary_table, file_name = df_name)
 }
 ```
