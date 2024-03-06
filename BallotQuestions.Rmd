@@ -113,8 +113,37 @@ Q2022 <- list(
 ```
 
 #Names of Q2020
+```{r} 
+Q2020 <- list(
+
+"Massachusetts Right to Repair Committee (Q1 2020,Support)" = 	Massachusetts_Right_to_Repair_Committee,
+
+"Coalition for Safe and Secure Data (Q1 2020, Oppose)" = Coalition_for_Safe_and_Secure_Data,
+
+"Ranked Choice Voting 2020 Committee (Q2 2020, Support)" = Ranked_Choice_Voting_2020_Committee,
+
+"No Ranked Choice Voting Committee 2020 (Q2 2022, Oppose)" = No_Ranked_Choice_Voting_Committee_2020
+)
+```
+
 
 #Name of Q2018
+```{r} 
+Q2018 <- list(
+  
+"Committee to Ensure Safe Patient Care (Q1 2018, Support)" = Committee_to_Ensure_Safe_Patient_Care, 
+
+"Coalition to Protect Patient Safety (Q1 2018, Oppose)" = Coalition_to_Protect_Patient_Safety, 
+
+"People Govern, Not Money (Q2 2018, Support)" = People_Govern_Not_Money,
+
+"Freedom for All Massachusetts, Inc (Q3 2018, Support)" = Freedom_for_All_Massachusetts_Inc,
+
+"No to 3 (Q3 2018, Oppose)" = No_to_3, 
+
+"Keep Massachusetts Safe (Q3 2018, Oppose)" = Keep_Massachusetts_Safe
+)
+```
 
 # _ FUNCTIONS _ 
 
@@ -195,6 +224,19 @@ for (df_name in names(classified_tables_Q2022)) {
   print(create_summary_table(df_name, classified_tables_Q2022[[df_name]]))
 }
 
+classified_tables_Q2020 <- lapply(Q2020, classification)
+
+for (df_name in names(classified_tables_Q2020)) {
+  cat("Table Name:", df_name, "\n")
+  print(create_summary_table(df_name, classified_tables_Q2020[[df_name]]))
+}
+
+classified_tables_Q2018 <- lapply(Q2018, classification)
+
+for (df_name in names(classified_tables_Q2018)) {
+  cat("Table Name:", df_name, "\n")
+  print(create_summary_table(df_name, classified_tables_Q2018[[df_name]]))
+}
 ```
 
 
