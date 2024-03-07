@@ -259,7 +259,7 @@ The following code exports summary tables as PNGs.
 ```{r}
 export_summary_table_png <- function(summary_table, file_name) {
   #Place File
-  output_dir <- "~/Desktop/PID/Campaign_Finance_Data"
+  output_dir <- "~/Desktop/"
   # Generate the file name with the .png extension
   png_file <- paste0(output_dir, file_name, ".png")
   # Save the summary table as a PNG file
