@@ -73,17 +73,30 @@ Q2018 <- list(Coalition_to_Protect_Patient_Safety, Committee_to_Ensure_Safe_Pati
 ```
 
 ##DATA WRANGLING
-```{r }
+# Filter out unwanted records from each list
+```{r}
+# For Q2022
 Q2022 <- lapply(Q2022, function(df) {
-  df %>% filter(Contributor != "Aggregated Unitemized Receipts")
+  df %>% 
+    filter(`Record Type Description` != "Aggregated Unitemized Receipts" &
+           `Record Type Description` != "Aggregated Unitemized Inkind Contributions" &
+           `Record Type Description` != "Bank Interest")
 })
 
+# For Q2020
 Q2020 <- lapply(Q2020, function(df) {
-  df %>% filter(Contributor != "Aggregated Unitemized Receipts")
+  df %>% 
+    filter(`Record Type Description` != "Aggregated Unitemized Receipts" &
+           `Record Type Description` != "Aggregated Unitemized Inkind Contributions" &
+           `Record Type Description` != "Bank Interest")
 })
 
+# For Q2018
 Q2018 <- lapply(Q2018, function(df) {
-  df %>% filter(Contributor != "Aggregated Unitemized Receipts")
+  df %>% 
+    filter(`Record Type Description` != "Aggregated Unitemized Receipts" &
+           `Record Type Description` != "Aggregated Unitemized Inkind Contributions" &
+           `Record Type Description` != "Bank Interest")
 })
 ```
 
